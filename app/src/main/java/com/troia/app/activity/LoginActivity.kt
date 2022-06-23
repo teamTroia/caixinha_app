@@ -2,8 +2,6 @@ package com.troia.app.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider

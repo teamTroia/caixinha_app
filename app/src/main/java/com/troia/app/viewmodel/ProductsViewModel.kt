@@ -1,4 +1,4 @@
-package com.troia.cadastro_produtos.viewmodel
+package com.troia.app.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

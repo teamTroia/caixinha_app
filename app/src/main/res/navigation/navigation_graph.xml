@@ -10,6 +10,6 @@
         android:label="CaixinhaActivity"/>
     <activity
         android:id="@+id/activityCadastro"
-        android:name="com.troia.cadastro_produtos.activity.ActivityCadastro"
+        android:name="com.troia.app.activity.ActivityCadastro"
         android:label="ActivityCadastro" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.troia.cadastro_produtos.activity
+package com.troia.app.activity
 
 import android.os.Bundle
 import android.util.Log
@@ -7,9 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.troia.cadastro_produtos.adapter.ProductAdapter
-import com.troia.cadastro_produtos.databinding.ActivityCadastroBinding
-import com.troia.cadastro_produtos.viewmodel.ProductsViewModel
+import com.troia.app.adapter.ProductAdapter
+import com.troia.app.viewmodel.ProductsViewModel
+import com.troia.app.databinding.ActivityCadastroBinding
 import com.troia.core.types.Product
 import com.troia.core.utils.FirebaseUtils
 import com.troia.core.types.SpaceItemDecoration

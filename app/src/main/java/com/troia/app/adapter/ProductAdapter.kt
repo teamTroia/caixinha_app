@@ -1,9 +1,9 @@
-package com.troia.cadastro_produtos.adapter
+package com.troia.app.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.troia.cadastro_produtos.databinding.ProdutoItenBinding
+import com.troia.app.databinding.ProdutoItenBinding
 import com.troia.core.types.Product
 
 class ProductAdapter(

@@ -1,23 +1,14 @@
 package com.troia.caixinha.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayoutMediator
-import com.troia.cadastro_produtos.activity.ActivityCadastro
 import com.troia.caixinha.databinding.ActivityCaixinhaBinding
 import com.troia.caixinha.R
 import com.troia.caixinha.adapter.CaixinhaPagerAdapter

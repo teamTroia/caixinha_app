@@ -16,4 +16,3 @@ rootProject.name = "Troia"
 include ':app'
 include ':core'
 include ':caixinha'
-include ':cadastro_produtos'

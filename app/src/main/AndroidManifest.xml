@@ -17,7 +17,7 @@
         <activity
             android:name=".activity.MainActivity">
         </activity>
-        <activity android:name="com.troia.cadastro_produtos.activity.ActivityCadastro">
+        <activity android:name=".activity.ActivityCadastro">
         </activity>
         <activity
             android:name="com.troia.caixinha.activity.CaixinhaActivity">
