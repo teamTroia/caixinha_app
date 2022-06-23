@@ -1,4 +1,4 @@
-package com.troia.caixinha.fragment
+package com.troia.app.fragment
 
 import android.os.Bundle
 import android.view.*
@@ -7,9 +7,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.troia.caixinha.adapter.CaixinhaListAdapter
-import com.troia.caixinha.databinding.CaixinhaFragmentBinding
-import com.troia.caixinha.viewmodel.ViewModelCaixinha
+import com.troia.app.adapter.CaixinhaListAdapter
+import com.troia.app.databinding.CaixinhaFragmentBinding
+import com.troia.app.viewmodel.ViewModelCaixinha
 import com.troia.core.types.UserProduct
 import com.troia.core.types.SpaceItemDecoration
 import java.io.Serializable

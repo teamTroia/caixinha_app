@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.troia.app.databinding.ActivityMainBinding
-import com.troia.caixinha.activity.CaixinhaActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -19,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.buttonLista.setOnClickListener {
-            val myIntent = Intent(this,CaixinhaActivity::class.java)
+            val myIntent = Intent(this, CaixinhaActivity::class.java)
             startActivity(myIntent)
         }
     }

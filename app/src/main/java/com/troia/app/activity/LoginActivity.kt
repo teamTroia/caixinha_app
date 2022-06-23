@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.troia.app.databinding.ActivityLoginBinding
 import com.troia.app.fragment.DialogCadastro
 import com.troia.app.viewmodel.LoginViewModel
-import com.troia.caixinha.activity.CaixinhaActivity
 import com.troia.core.R
 import com.troia.core.database.DataNotifier
 import com.troia.core.fragment.GeneralDialog

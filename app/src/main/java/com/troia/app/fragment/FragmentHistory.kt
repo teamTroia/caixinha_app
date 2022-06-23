@@ -1,4 +1,4 @@
-package com.troia.caixinha.fragment
+package com.troia.app.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.troia.caixinha.adapter.CaixinhaHistoryAdapter
-import com.troia.caixinha.databinding.HistoryFragmentBinding
-import com.troia.caixinha.viewmodel.ViewModelCaixinha
+import com.troia.app.adapter.CaixinhaHistoryAdapter
+import com.troia.app.databinding.HistoryFragmentBinding
+import com.troia.app.viewmodel.ViewModelCaixinha
 import com.troia.core.types.SpaceItemDecoration
 
 class FragmentHistory: Fragment() {

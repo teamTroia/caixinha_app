@@ -1,4 +1,4 @@
-package com.troia.caixinha.fragment
+package com.troia.app.fragment
 
 import android.app.Dialog
 import android.os.Bundle
@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.troia.caixinha.databinding.DialogProductDetailsBinding
+import com.troia.app.databinding.DialogProductDetailsBinding
 import com.troia.core.types.UserProduct
 
 class ProductDialog() : DialogFragment() {

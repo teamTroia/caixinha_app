@@ -1,10 +1,10 @@
-package com.troia.caixinha.adapter
+package com.troia.app.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.troia.caixinha.databinding.CaixinhaItemBinding
+import com.troia.app.databinding.CaixinhaItemBinding
 import com.troia.core.types.UserProduct
 
 class CaixinhaListAdapter(

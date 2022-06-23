@@ -1,15 +1,20 @@
 package com.troia.app.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
 import com.troia.app.adapter.ProductAdapter
 import com.troia.app.viewmodel.ProductsViewModel
 import com.troia.app.databinding.ActivityCadastroBinding
+import com.troia.core.database.DataNotifier
 import com.troia.core.types.Product
 import com.troia.core.utils.FirebaseUtils
 import com.troia.core.types.SpaceItemDecoration
@@ -26,9 +31,41 @@ class ActivityCadastro: AppCompatActivity() {
         binding = ActivityCadastroBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar.root as Toolbar)
+        setupNavMenu()
         viewModel.load_products()
         setupAdapter()
         setupListeners()
+    }
+
+    fun setupNavMenu() {
+        val actionBarToggle = ActionBarDrawerToggle(this, binding.root, 0, 0)
+        binding.root.addDrawerListener(actionBarToggle)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBarToggle.syncState()
+
+        (binding.navView.root as NavigationView).setNavigationItemSelectedListener {
+            when (it.itemId) {
+                com.troia.core.R.id.menu_cart -> {
+                    startActivity(Intent(this, CaixinhaActivity::class.java))
+                    finish()
+                    true
+                }
+                else -> {false}
+            }
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        binding.root.openDrawer(binding.navView.root)
+        return true
+    }
+
+    override fun onBackPressed() {
+        if (this.binding.root.isDrawerOpen(GravityCompat.START)) {
+            this.binding.root.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 
     fun setupListeners() {
@@ -47,6 +84,16 @@ class ActivityCadastro: AppCompatActivity() {
         viewModel.updatedList.observe(this) {
             adapter.updateList(viewModel.getProducts())
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        DataNotifier.subscribe(viewModel)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        DataNotifier.unsubscribe(viewModel)
     }
 
     fun setupAdapter() {

@@ -1,4 +1,4 @@
-package com.troia.caixinha.fragment
+package com.troia.app.fragment
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.troia.caixinha.databinding.SettingsBottomsheetBinding
+import com.troia.app.databinding.SettingsBottomsheetBinding
 import com.troia.core.R
 
 class BottomSheetSettings: BottomSheetDialogFragment() {

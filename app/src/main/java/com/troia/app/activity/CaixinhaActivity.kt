@@ -1,5 +1,6 @@
-package com.troia.caixinha.activity
+package com.troia.app.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -8,12 +9,11 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayoutMediator
-import com.troia.caixinha.databinding.ActivityCaixinhaBinding
-import com.troia.caixinha.R
-import com.troia.caixinha.adapter.CaixinhaPagerAdapter
-import com.troia.caixinha.fragment.BottomSheetSettings
-import com.troia.caixinha.viewmodel.ViewModelCaixinha
+import com.troia.app.databinding.ActivityCaixinhaBinding
+import com.troia.app.R
+import com.troia.app.viewmodel.ViewModelCaixinha
 import com.troia.core.database.DataNotifier
 import com.troia.core.fragment.GeneralDialog
 import java.io.Serializable
@@ -38,6 +38,17 @@ class CaixinhaActivity: AppCompatActivity() {
         binding.root.addDrawerListener(actionBarToggle)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         actionBarToggle.syncState()
+
+        (binding.navView.root as NavigationView).setNavigationItemSelectedListener {
+            when (it.itemId) {
+                com.troia.core.R.id.menu_products -> {
+                    startActivity(Intent(this, ActivityCadastro::class.java))
+                    finish()
+                    true
+                }
+                else -> {false}
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -69,7 +80,7 @@ class CaixinhaActivity: AppCompatActivity() {
     }
 
     private fun setupViewPager(){
-        binding.viewPager.adapter = CaixinhaPagerAdapter(this)
+        binding.viewPager.adapter = com.troia.app.adapter.CaixinhaPagerAdapter(this)
         binding.viewPager.isUserInputEnabled = true
 
         TabLayoutMediator(
@@ -123,10 +134,10 @@ class CaixinhaActivity: AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> {
                 val bundle = Bundle()
-                bundle.putSerializable(BottomSheetSettings.UPDATE_LISTENER, ::updateCallback as Serializable)
-                bundle.putSerializable(BottomSheetSettings.CHECKOUT_LISTENER, ::checkoutCallback as Serializable?)
-                val sheet = BottomSheetSettings.newInstance(bundle)
-                sheet.show(supportFragmentManager, BottomSheetSettings.TAG)
+                bundle.putSerializable(com.troia.app.fragment.BottomSheetSettings.UPDATE_LISTENER, ::updateCallback as Serializable)
+                bundle.putSerializable(com.troia.app.fragment.BottomSheetSettings.CHECKOUT_LISTENER, ::checkoutCallback as Serializable?)
+                val sheet = com.troia.app.fragment.BottomSheetSettings.newInstance(bundle)
+                sheet.show(supportFragmentManager, com.troia.app.fragment.BottomSheetSettings.TAG)
                 true
             }
             else -> super.onOptionsItemSelected(item)

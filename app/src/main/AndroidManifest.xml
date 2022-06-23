@@ -20,7 +20,7 @@
         <activity android:name=".activity.ActivityCadastro">
         </activity>
         <activity
-            android:name="com.troia.caixinha.activity.CaixinhaActivity">
+            android:name=".activity.CaixinhaActivity">
         </activity>
         <activity
             android:name=".activity.LoginActivity"

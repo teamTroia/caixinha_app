@@ -1,10 +1,10 @@
-package com.troia.caixinha.adapter
+package com.troia.app.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.troia.caixinha.databinding.HistoryItemBinding
+import com.troia.app.databinding.HistoryItemBinding
 import com.troia.core.types.Purchase
 import java.text.SimpleDateFormat
 
