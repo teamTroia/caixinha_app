@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menu_cart"
+        android:icon="@drawable/ic_cart"
+        android:title="@string/title_caixinha"/>
+
+    <item android:id="@+id/menu_products"
+        android:icon="@drawable/ic_list_check"
+        android:title="@string/title_produtos"/>
+
+    <item android:id="@+id/menu_members"
+        android:icon="@drawable/ic_user_group"
+        android:title="@string/title_members"/>
+
+</menu>

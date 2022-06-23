@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/caixinhaActivity">
+
+    <activity
+        android:id="@+id/caixinhaActivity"
+        android:name="com.troia.caixinha.activity.CaixinhaActivity"
+        android:label="CaixinhaActivity"/>
+    <activity
+        android:id="@+id/activityCadastro"
+        android:name="com.troia.cadastro_produtos.activity.ActivityCadastro"
+        android:label="ActivityCadastro" />
+</navigation>

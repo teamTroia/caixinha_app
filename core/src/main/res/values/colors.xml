@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="appBackground">#FF353539</color>
+    <color name="grey">#FF202020</color>
+
+    <color name="greenTroia">#FF0CB02B</color>
+    <color name="greyTroia">#FF282829</color>
+    <color name="lightGreyTroia">#FF808080</color>
+    <color name="lightGrey">#FF353535</color>
+    <color name="whiteTroia">#FFFEFEFE</color>
+
+    <color name="greenTroiaOld">#FF00A859</color>
+    <color name="redTroiaOld">#A80000</color>
+    <color name="greyTroiaOld">#FF282829</color>
+    <color name="whiteTroiaOld">#FFFEFEFE</color>
+</resources>

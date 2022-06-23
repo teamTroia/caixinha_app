@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/appBackground">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="15dp"
+        android:paddingHorizontal="10dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            tools:listitem="@layout/produto_iten"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:paddingVertical="5dp">
+
+            <EditText
+                android:id="@+id/editProduct"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/font_troia"
+                android:layout_weight="0.7"
+                android:background="@drawable/rounded_background"/>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="18dp"
+                android:layout_weight="0.1" />
+
+            <EditText
+                android:id="@+id/editPrice"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/font_troia"
+                android:layout_weight="0.2"
+                android:background="@drawable/rounded_background"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonAdd"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:text="Adicionar"
+            style="@style/font_troia"
+            android:paddingVertical="0dp"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/greenTroiaOld"/>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

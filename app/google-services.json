@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "931885222662",
+    "project_id": "troia-f30c9",
+    "storage_bucket": "troia-f30c9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:931885222662:android:0db7e6c18aecaa310d6c87",
+        "android_client_info": {
+          "package_name": "com.troia.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "931885222662-7s8ke7ab1el2asajvtaa7l7r89r1mm98.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7DNEkCMtZon4CTTNyMwaCeL5khKJMreQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "931885222662-7s8ke7ab1el2asajvtaa7l7r89r1mm98.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

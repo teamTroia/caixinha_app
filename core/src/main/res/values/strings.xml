@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appName">TROIA</string>
+    <!-- CAIXINHA -->
+    <string name="searchHint">Buscar..</string>
+    <string name="labelProduct">Produto:</string>
+    <string name="titleProduct">Produto</string>
+    <string name="labelQuantity">Quantidade:</string>
+    <string name="labelPrice">Preço:</string>
+    <string name="labelTotal">Total:</string>
+    <string name="labelOk">OK</string>
+    <string name="labelPlus">+</string>
+    <string name="labelMinus">-</string>
+    <string name="action_settings">Configurações</string>
+    <string name="checkout">Fechar Compra</string>
+    <string name="update_prices">Atualizar Produtos</string>
+    <string name="confirm">Confirmar</string>
+    <string name="cancell">Cancelar</string>
+    <string name="labelWarning">Aviso</string>
+    <string name="title_history">Historico</string>
+    <string name="title_caixinha">Caixinha</string>
+    <string name="title_produtos">Produtos</string>
+    <string name="title_members">Membros</string>
+    <string name="nothing_to_show">Não há nada para mostrar</string>
+    <string name="warningNeedCheckout">Para baixar a nova lista de produtos voçê precisa quitar a compra atual primeiro!</string>
+    <string name="ocntinue">Continuar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="labelLogin">Entrar</string>
+    <string name="email_hint">E-mail</string>
+    <string name="password_hint">Senha</string>
+    <string name="name_hint">Nome</string>
+    <string name="password_confirm_hint">Confirmar Senha</string>
+    <string name="register">Cadastre-se</string>
+    <string name="register_confirm">Cadastrar</string>
+    <string name="diferent_pass">A senhas devem ser iguais</string>
+    <string name="invalid_email">Email ja cadastrado</string>
+    <string name="empty_field">Preencha todos os campos</string>
+    <string name="register_success">Cadastro realizado com sucesso</string>
+    <string name="login">Login</string>
+    <string name="wrong_user">Usuário ou senha incorreta</string>
+
+</resources>

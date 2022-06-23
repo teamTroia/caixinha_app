@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="font_troia">
+        <item name="android:fontFamily">@font/cantarell</item>
+        <item name="android:textColor">@color/whiteTroia</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="Theme.AppCompat.Light">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="default_button">
+        <item name="android:background">@drawable/button_background</item>
+        <item name="android:fontFamily">@font/cantarell</item>
+        <item name="android:textColor">@color/whiteTroia</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>
