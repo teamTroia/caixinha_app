@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.buttonAdicinoar.setOnClickListener {
-            val myIntent = Intent(this, ActivityCadastro::class.java)
+            val myIntent = Intent(this, CadastroActivity::class.java)
             startActivity(myIntent)
         }
 

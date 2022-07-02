@@ -40,7 +40,7 @@ class FragmentHistory: Fragment() {
         historyAdapter.updateList(viewModel.getPurchaseList())
     }
 
-    fun setupListeners(){
+    private fun setupListeners(){
         viewModel.updatedPurchaseList.observe(viewLifecycleOwner){
             if(viewModel.getPurchaseList().isEmpty()){
                 binding.tvNothing.visibility = View.VISIBLE
@@ -51,8 +51,15 @@ class FragmentHistory: Fragment() {
         }
     }
 
-    fun setupRecyclerView(){
-        historyAdapter = CaixinhaHistoryAdapter(viewModel.getPurchaseList())
+    private fun setupRecyclerView(){
+        viewModel.getPurchaseList().let {
+            if(it.isEmpty()){
+                binding.tvNothing.visibility = View.VISIBLE
+            } else {
+                binding.tvNothing.visibility = View.GONE
+            }
+            historyAdapter = CaixinhaHistoryAdapter(it)
+        }
         binding.recyclerView.apply{
             adapter = historyAdapter
             layoutManager = LinearLayoutManager(context)

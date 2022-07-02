@@ -13,12 +13,12 @@ class LoginViewModel: ViewModel(), DataObserver {
     val userValidateResult = MutableLiveData<Pair<Boolean, String>?>(null)
     val userData = MutableLiveData<Triple<String, String, String>?>(null)
     fun validateEmail(email: String) {
-        FirebaseUtils.validate_email(email.clean())
+        FirebaseUtils.validateEmail(email.clean())
     }
 
     fun register(name:String, email:String, pass:String): Boolean {
         val password = encrypt(pass)
-        FirebaseUtils.register_user(email.clean(), name, password)
+        FirebaseUtils.registerUser(email.clean(), name, password)
         return true
     }
 
@@ -37,7 +37,7 @@ class LoginViewModel: ViewModel(), DataObserver {
     }
 
     fun getUserData(email: String) {
-        FirebaseUtils.get_user_data(email.clean())
+        FirebaseUtils.getUserData(email.clean())
     }
 
     override fun notify(type: NotificationType, data: Any?) {

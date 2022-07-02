@@ -13,4 +13,8 @@
         android:icon="@drawable/ic_user_group"
         android:title="@string/title_members"/>
 
+    <item android:id="@+id/menu_logout"
+        android:icon="@drawable/ic_logout"
+        android:title="@string/title_logout"/>
+
 </menu>

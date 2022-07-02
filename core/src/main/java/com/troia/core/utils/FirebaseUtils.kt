@@ -1,18 +1,22 @@
 package com.troia.core.utils
 
 import com.troia.core.types.Product
+import com.troia.core.types.Purchase
 import com.troia.core.types.UserProduct
 
 object FirebaseUtils {
 
     interface FirebaseUtilsAdapter {
-        fun save_product(products: Product)
-        fun save_user_cart(user: String, products: ArrayList<UserProduct>)
-        fun get_all_products()
-        fun get_quantity_for_user(user: String)
-        fun validate_email(email: String)
-        fun get_user_data(email: String)
-        fun register_user(email: String, name: String, pass: String)
+        fun saveProduct(products: Product)
+        fun saveUserCart(user: String, products: ArrayList<UserProduct>)
+        fun getAllProducts()
+        fun getUserCart(user: String)
+        fun clearUserCart(user: String)
+        fun validateEmail(email: String)
+        fun getUserData(email: String)
+        fun registerUser(email: String, name: String, pass: String)
+        fun savePurchase(user:String, purchase: Purchase)
+        fun getPurchases(user: String)
     }
 
     lateinit var adapter: FirebaseUtilsAdapter
@@ -20,11 +24,14 @@ object FirebaseUtils {
         this.adapter = adapter
     }
 
-    fun get_quantity_for_user(user: String) = adapter.get_quantity_for_user(user)
-    fun save_product(product: Product) = adapter.save_product(product)
-    fun save_user_cart(user: String, products: ArrayList<UserProduct>) = adapter.save_user_cart(user, products)
-    fun get_all_products() = adapter.get_all_products()
-    fun validate_email(email:String) = adapter.validate_email(email)
-    fun get_user_data(email:String) = adapter.get_user_data(email)
-    fun register_user(email: String, name: String, pass: String) = adapter.register_user(email, name, pass)
+    fun getUserCart(user: String) = adapter.getUserCart(user)
+    fun saveProduct(product: Product) = adapter.saveProduct(product)
+    fun saveUserCart(user: String, products: ArrayList<UserProduct>) = adapter.saveUserCart(user, products)
+    fun getAllProducts() = adapter.getAllProducts()
+    fun validateEmail(email:String) = adapter.validateEmail(email)
+    fun getUserData(email:String) = adapter.getUserData(email)
+    fun registerUser(email: String, name: String, pass: String) = adapter.registerUser(email, name, pass)
+    fun clearUserCart(user: String) = adapter.clearUserCart(user)
+    fun savePurchase(user:String, purchase: Purchase) = adapter.savePurchase(user,purchase)
+    fun getPurchases(user: String) = adapter.getPurchases(user)
 }

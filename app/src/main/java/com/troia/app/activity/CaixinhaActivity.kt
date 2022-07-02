@@ -16,6 +16,7 @@ import com.troia.app.R
 import com.troia.app.viewmodel.ViewModelCaixinha
 import com.troia.core.database.DataNotifier
 import com.troia.core.fragment.GeneralDialog
+import com.troia.core.utils.UserUtils
 import java.io.Serializable
 
 class CaixinhaActivity: AppCompatActivity() {
@@ -33,16 +34,18 @@ class CaixinhaActivity: AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(ViewModelCaixinha::class.java)
     }
 
-    fun setupNavMenu() {
+    private fun setupNavMenu() {
         val actionBarToggle = ActionBarDrawerToggle(this, binding.root, 0, 0)
         binding.root.addDrawerListener(actionBarToggle)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         actionBarToggle.syncState()
+        binding.navView.root.menu.findItem(com.troia.core.R.id.menu_products).isEnabled = UserUtils.isUserAdmin()
+        binding.navView.root.menu.findItem(com.troia.core.R.id.menu_members).isEnabled = UserUtils.isUserAdmin()
 
         (binding.navView.root as NavigationView).setNavigationItemSelectedListener {
             when (it.itemId) {
                 com.troia.core.R.id.menu_products -> {
-                    startActivity(Intent(this, ActivityCadastro::class.java))
+                    startActivity(Intent(this, CadastroActivity::class.java))
                     finish()
                     true
                 }
@@ -62,11 +65,6 @@ class CaixinhaActivity: AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.loadProductsList()
     }
 
     override fun onStart() {

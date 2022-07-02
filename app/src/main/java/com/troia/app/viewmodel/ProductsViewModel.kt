@@ -9,25 +9,17 @@ import com.troia.core.types.Product
 import com.troia.core.utils.FirebaseUtils
 
 class ProductsViewModel: ViewModel(), DataObserver {
-    var productsList: ArrayList<Product> = arrayListOf()
     val updatedList = MutableLiveData(false)
-
-    fun load_products() {
-        productsList.addAll(ProductsRepository.get_products())
-        FirebaseUtils.get_all_products()
-    }
 
     fun getProducts(): ArrayList<Product> {
         return arrayListOf<Product>().apply {
-            addAll(productsList)
+            addAll(ProductsRepository.get_products())
         }
     }
 
     override fun notify(type: NotificationType, data: Any?) {
         when (type) {
             NotificationType.ProductsLoad -> {
-                productsList.clear()
-                productsList.addAll(ProductsRepository.get_products())
                 updatedList.postValue(true)
             }
             else -> {}

@@ -12,6 +12,7 @@ import com.troia.core.R
 import com.troia.core.database.DataNotifier
 import com.troia.core.fragment.GeneralDialog
 import com.troia.core.types.User
+import com.troia.core.utils.FirebaseUtils
 import com.troia.core.utils.PreferencesManager
 import com.troia.core.utils.UserUtils
 
@@ -72,6 +73,10 @@ class LoginActivity: AppCompatActivity() {
                     )
                     PreferencesManager.setLogin(userEmail, userPass)
                     val myIntent = Intent(this, CaixinhaActivity::class.java)
+                    UserUtils.userCleanEmail()?.let { mail ->
+                        FirebaseUtils.getUserCart(mail)
+                        FirebaseUtils.getPurchases(mail)
+                    }
                     startActivity(myIntent)
                     finish()
                 } else {

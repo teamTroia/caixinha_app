@@ -17,7 +17,7 @@
         <activity
             android:name=".activity.MainActivity">
         </activity>
-        <activity android:name=".activity.ActivityCadastro">
+        <activity android:name=".activity.CadastroActivity">
         </activity>
         <activity
             android:name=".activity.CaixinhaActivity">

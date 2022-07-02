@@ -18,9 +18,10 @@ import com.troia.core.database.DataNotifier
 import com.troia.core.types.Product
 import com.troia.core.utils.FirebaseUtils
 import com.troia.core.types.SpaceItemDecoration
+import com.troia.core.utils.UserUtils
 import java.lang.Exception
 
-class ActivityCadastro: AppCompatActivity() {
+class CadastroActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityCadastroBinding
     private val viewModel: ProductsViewModel by viewModels()
@@ -32,7 +33,6 @@ class ActivityCadastro: AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar.root as Toolbar)
         setupNavMenu()
-        viewModel.load_products()
         setupAdapter()
         setupListeners()
     }
@@ -42,6 +42,8 @@ class ActivityCadastro: AppCompatActivity() {
         binding.root.addDrawerListener(actionBarToggle)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         actionBarToggle.syncState()
+        binding.navView.root.menu.findItem(com.troia.core.R.id.menu_products).isEnabled = UserUtils.isUserAdmin()
+        binding.navView.root.menu.findItem(com.troia.core.R.id.menu_members).isEnabled = UserUtils.isUserAdmin()
 
         (binding.navView.root as NavigationView).setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -74,8 +76,7 @@ class ActivityCadastro: AppCompatActivity() {
                 val name = binding.editProduct.text.toString()
                 val price = binding.editPrice.text.toString().toDouble()
                 val product = Product(name, price)
-                adapter.addProduct(product)
-                FirebaseUtils.save_product(product)
+                FirebaseUtils.saveProduct(product)
             } catch (e: Exception) {
                 Log.println(Log.ERROR, "EXCEPTION", e.toString())
             }
@@ -99,8 +100,8 @@ class ActivityCadastro: AppCompatActivity() {
     fun setupAdapter() {
         binding.recyclerView.apply {
             itemAnimator = null
-            this@ActivityCadastro.adapter = ProductAdapter(viewModel.getProducts())
-            adapter = this@ActivityCadastro.adapter
+            this@CadastroActivity.adapter = ProductAdapter(viewModel.getProducts())
+            adapter = this@CadastroActivity.adapter
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(SpaceItemDecoration(15, RecyclerView.VERTICAL, 0, 15))
         }

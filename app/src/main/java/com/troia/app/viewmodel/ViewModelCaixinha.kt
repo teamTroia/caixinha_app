@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.troia.core.database.DataObserver
-import com.troia.core.repository.CaixinhaRepository
 import com.troia.core.database.NotificationType
 import com.troia.core.types.UserProduct
 import com.troia.core.types.Purchase
@@ -20,35 +19,24 @@ class ViewModelCaixinha: ViewModel(), DataObserver {
     val updatedPurchaseList = MutableLiveData(false)
     var creatingNewList = false
 
-    fun loadProductsList() {
-        loadPurchasesHistoryFromDB()
-        UserUtils.userCleanEmail()?.let { CaixinhaRepository.loadProducts(it) }
-    }
-
-    private fun loadPurchasesHistoryFromDB(){
-        viewModelScope.launch(Dispatchers.IO) {
-            CaixinhaRepository.loadPurchasesFromDatabase()
-        }
-    }
-
     fun getProductsList(search: String): ArrayList<UserProduct> {
-        return CaixinhaRepository.productsList.filter { it.name.lowercase().contains(search.lowercase()) } as ArrayList<UserProduct>
+        return UserUtils.productsList.filter { it.name.lowercase().contains(search.lowercase()) } as ArrayList<UserProduct>
     }
 
     fun getTotal(): Double {
-        return CaixinhaRepository.productsList.sumOf {
+        return UserUtils.productsList.sumOf {
             it.getTotal()
         }
     }
 
     fun checkout() {
         viewModelScope.launch(Dispatchers.IO) {
-            val purchase = Purchase(
-                Date(),
-                getTotal()
-            )
-            CaixinhaRepository.addPurchase(purchase)
-            CaixinhaRepository.resetList()
+            val purchase = Purchase().apply {
+                date = Date()
+                value = getTotal()
+            }
+            UserUtils.addPurchase(purchase)
+            UserUtils.resetList()
             saveProducts()
             updatedProductsList.postValue(true)
             updatedPurchaseList.postValue(true)
@@ -61,36 +49,44 @@ class ViewModelCaixinha: ViewModel(), DataObserver {
                 updatedPurchaseList.postValue(true)
             }
             NotificationType.ProductsLoad -> {
-                if(creatingNewList) {
-                    CaixinhaRepository.createList()
-                    saveProducts()
-                    updatedProductsList.postValue(true)
-                }
+                createNewList()
             }
-            NotificationType.QuantityLoad -> {
+            NotificationType.UserCartLoad -> {
                 val load = data as Boolean
                 if(load) {
                     updatedProductsList.postValue(true)
                 } else {
                     creatingNewList = true
-                    FirebaseUtils.get_all_products()
+                    createNewList()
                 }
             }
             else -> {}
         }
     }
 
+    fun createNewList() {
+        if(creatingNewList) {
+            UserUtils.createList()
+            saveProducts()
+            updatedProductsList.postValue(true)
+            creatingNewList = false
+        }
+    }
+
     fun getNewList() {
-        //TODO implementar
+        UserUtils.userCleanEmail()?.let { FirebaseUtils.clearUserCart(it) }
+        UserUtils.productsList.clear()
+        creatingNewList = true
+        createNewList()
     }
 
     fun saveProducts(){
-        UserUtils.userCleanEmail()?.let { FirebaseUtils.save_user_cart(it,CaixinhaRepository.productsList) }
+        UserUtils.userCleanEmail()?.let { FirebaseUtils.saveUserCart(it,UserUtils.productsList) }
     }
 
     fun getPurchaseList(): ArrayList<Purchase> {
         return ArrayList<Purchase>().apply{
-            addAll(CaixinhaRepository.purchasesList)
+            addAll(UserUtils.purchasesList)
         }
     }
 }

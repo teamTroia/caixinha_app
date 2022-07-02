@@ -21,6 +21,13 @@ object PreferencesManager {
         prefsEditor = prefs.edit()
     }
 
+    fun erase_login() {
+        prefsEditor.remove(USER_EMAIL)
+        prefsEditor.apply()
+        prefsEditor.remove(USER_PASS)
+        prefsEditor.apply()
+    }
+
     fun setLogin(email: String, pass:String) {
         prefsEditor.putString(USER_EMAIL,email)
         prefsEditor.apply()

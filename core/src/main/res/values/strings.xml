@@ -21,6 +21,7 @@
     <string name="title_caixinha">Caixinha</string>
     <string name="title_produtos">Produtos</string>
     <string name="title_members">Membros</string>
+    <string name="title_logout">Sair</string>
     <string name="nothing_to_show">Não há nada para mostrar</string>
     <string name="warningNeedCheckout">Para baixar a nova lista de produtos voçê precisa quitar a compra atual primeiro!</string>
     <string name="ocntinue">Continuar</string>

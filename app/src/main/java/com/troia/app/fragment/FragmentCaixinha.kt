@@ -12,6 +12,7 @@ import com.troia.app.databinding.CaixinhaFragmentBinding
 import com.troia.app.viewmodel.ViewModelCaixinha
 import com.troia.core.types.UserProduct
 import com.troia.core.types.SpaceItemDecoration
+import com.troia.core.utils.UserUtils
 import java.io.Serializable
 
 class FragmentCaixinha: Fragment(), CaixinhaListAdapter.CaixinhaAdapterListener {
@@ -43,7 +44,7 @@ class FragmentCaixinha: Fragment(), CaixinhaListAdapter.CaixinhaAdapterListener 
         viewModel.saveProducts()
     }
 
-    fun setupEditTextListener(){
+    private fun setupEditTextListener(){
         binding.editSearch.addTextChangedListener {
             caixinhaAdapter.setProductList(viewModel.getProductsList(it.toString()))
         }
@@ -56,18 +57,15 @@ class FragmentCaixinha: Fragment(), CaixinhaListAdapter.CaixinhaAdapterListener 
                 if (list.size > 0) {
                     caixinhaAdapter.setProductList(list)
                     setTotal()
-                    binding.progressBar.visibility = View.GONE
                 }
-            } else {
-                binding.progressBar.visibility = View.VISIBLE
             }
         }
     }
 
     private fun setupAdapter(){
-        caixinhaAdapter = CaixinhaListAdapter(viewModel.getProductsList(""),
-            this
-        )
+        viewModel.getProductsList("").let {
+            caixinhaAdapter = CaixinhaListAdapter(it, this)
+        }
         binding.viewItens.apply {
             itemAnimator = null
             clearOnScrollListeners()
