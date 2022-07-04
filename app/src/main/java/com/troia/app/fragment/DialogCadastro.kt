@@ -39,7 +39,7 @@ class DialogCadastro: DialogFragment() {
         setupListeners()
     }
 
-    fun setupListeners() {
+    private fun setupListeners() {
         binding.buttonRegister.setOnClickListener {
             binding.errorAlert.visibility = View.GONE
             userEmail = binding.editEmail.text.toString().trim()
@@ -64,7 +64,7 @@ class DialogCadastro: DialogFragment() {
         }
     }
 
-    fun register(email:String, name:String, pass:String) {
+    private fun register(email:String, name:String, pass:String) {
         val success = viewModel.register(name, email, pass)
         if(success) {
             val alert = GeneralDialog.newInstance(
@@ -80,7 +80,7 @@ class DialogCadastro: DialogFragment() {
         }
     }
 
-    fun validateFields(name:String, email:String, pass:String): Boolean {
+    private fun validateFields(name:String, email:String, pass:String): Boolean {
         if(name == "" || email == "" || pass == "") {
             binding.errorAlert.visibility = View.VISIBLE
             binding.errorAlert.text = getString(R.string.empty_field)
@@ -89,7 +89,7 @@ class DialogCadastro: DialogFragment() {
         return true
     }
 
-    fun validatePass(pass: String, confirm:String): Boolean {
+    private fun validatePass(pass: String, confirm:String): Boolean {
         if(pass != confirm) {
             binding.errorAlert.visibility = View.VISIBLE
             binding.errorAlert.text = getString(R.string.diferent_pass)

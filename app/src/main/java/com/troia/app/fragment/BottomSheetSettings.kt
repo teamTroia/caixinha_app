@@ -43,6 +43,7 @@ class BottomSheetSettings: BottomSheetDialogFragment() {
         binding.checkout.setOnClickListener {
             val checkout: () -> Unit = arguments?.getSerializable(CHECKOUT_LISTENER) as () -> Unit
             checkout()
+            dismiss()
         }
 
         binding.updateProducts.setOnClickListener {

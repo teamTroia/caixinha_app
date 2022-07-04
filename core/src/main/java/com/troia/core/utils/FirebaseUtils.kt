@@ -2,6 +2,7 @@ package com.troia.core.utils
 
 import com.troia.core.types.Product
 import com.troia.core.types.Purchase
+import com.troia.core.types.User
 import com.troia.core.types.UserProduct
 
 object FirebaseUtils {
@@ -14,9 +15,11 @@ object FirebaseUtils {
         fun clearUserCart(user: String)
         fun validateEmail(email: String)
         fun getUserData(email: String)
-        fun registerUser(email: String, name: String, pass: String)
+        fun registerUser(user: User)
         fun savePurchase(user:String, purchase: Purchase)
         fun getPurchases(user: String)
+        fun removeListeners()
+        fun getMembersList()
     }
 
     lateinit var adapter: FirebaseUtilsAdapter
@@ -30,8 +33,10 @@ object FirebaseUtils {
     fun getAllProducts() = adapter.getAllProducts()
     fun validateEmail(email:String) = adapter.validateEmail(email)
     fun getUserData(email:String) = adapter.getUserData(email)
-    fun registerUser(email: String, name: String, pass: String) = adapter.registerUser(email, name, pass)
+    fun registerUser(user: User) = adapter.registerUser(user)
     fun clearUserCart(user: String) = adapter.clearUserCart(user)
     fun savePurchase(user:String, purchase: Purchase) = adapter.savePurchase(user,purchase)
     fun getPurchases(user: String) = adapter.getPurchases(user)
+    fun removeListeners() = adapter.removeListeners()
+    fun getMembersList() = adapter.getMembersList()
 }

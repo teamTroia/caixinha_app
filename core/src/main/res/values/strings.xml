@@ -24,6 +24,7 @@
     <string name="title_logout">Sair</string>
     <string name="nothing_to_show">Não há nada para mostrar</string>
     <string name="warningNeedCheckout">Para baixar a nova lista de produtos voçê precisa quitar a compra atual primeiro!</string>
+    <string name="warningEmptyCart">Não ha produtos para fechar uma compra!</string>
     <string name="ocntinue">Continuar</string>
     <string name="cancel">Cancelar</string>
     <string name="labelLogin">Entrar</string>
@@ -39,5 +40,7 @@
     <string name="register_success">Cadastro realizado com sucesso</string>
     <string name="login">Login</string>
     <string name="wrong_user">Usuário ou senha incorreta</string>
+    <string name="paidAlert">Compra paga</string>
+    <string name="notPaidAlert">Pagamento pendente</string>
 
 </resources>

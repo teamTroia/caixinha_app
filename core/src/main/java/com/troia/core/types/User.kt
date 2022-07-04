@@ -1,7 +1,8 @@
 package com.troia.core.types
 
-data class User(
-    val name: String,
-    val email: String,
-    val admin: Boolean
-)
+class User() {
+    var name: String? = null
+    var email: String? = null
+    var admin: Boolean? = null
+    var pass: String? = null
+}

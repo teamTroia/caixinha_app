@@ -10,11 +10,14 @@ import com.google.firebase.database.ValueEventListener
 import com.troia.core.database.DataNotifier
 import com.troia.core.repository.ProductsRepository
 import com.troia.core.database.NotificationType
+import com.troia.core.repository.CaixinhaRepository
 import com.troia.core.types.Product
 import com.troia.core.types.Purchase
+import com.troia.core.types.User
 import com.troia.core.types.UserProduct
 import com.troia.core.utils.FirebaseUtils
 import com.troia.core.utils.UserUtils
+import com.troia.core.utils.UserUtils.clean
 
 class FirebaseAccess(context: Context) : FirebaseUtils.FirebaseUtilsAdapter {
     companion object {
@@ -29,11 +32,19 @@ class FirebaseAccess(context: Context) : FirebaseUtils.FirebaseUtilsAdapter {
     }
 
     var database: FirebaseDatabase
-
+    private lateinit var purchasesListener: ValueEventListener
+    private lateinit var productUserListener: ValueEventListener
+    private lateinit var membersListener: ValueEventListener
     init {
         FirebaseApp.initializeApp(context)
         database = FirebaseDatabase.getInstance()
         database.setPersistenceEnabled(true)
+    }
+
+    override fun removeListeners() {
+        database.reference.removeEventListener(purchasesListener)
+        database.reference.removeEventListener(productUserListener)
+        database.reference.removeEventListener(membersListener)
     }
 
     override fun saveProduct(products: Product) {
@@ -64,7 +75,7 @@ class FirebaseAccess(context: Context) : FirebaseUtils.FirebaseUtilsAdapter {
     }
 
     override fun getUserCart(user: String) {
-        val productUserListener = object : ValueEventListener {
+        productUserListener = object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 if(p0.value == null) {
                     DataNotifier.notifyData(NotificationType.UserCartLoad, false)
@@ -106,14 +117,14 @@ class FirebaseAccess(context: Context) : FirebaseUtils.FirebaseUtilsAdapter {
         database.reference.child(USERS_KEY).child(USER_DATA_KEY).child(email).addListenerForSingleValueEvent(productUserListener)
     }
 
-    override fun getUserData(email:String) {
+    override fun getUserData(email: String) {
         val productUserListener = object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 if(p0.value == null) {
                     DataNotifier.notifyData(NotificationType.UserData, null)
                 } else {
-                    val map = p0.value as HashMap<String, String>
-                    DataNotifier.notifyData(NotificationType.UserData,Triple(map[NAME_KEY], map[PASS_KEY], map[ADMIN_KEY]))
+                    val user = p0.getValue(User::class.java)
+                    DataNotifier.notifyData(NotificationType.UserData, user)
                 }
             }
             override fun onCancelled(p0: DatabaseError) {
@@ -123,10 +134,8 @@ class FirebaseAccess(context: Context) : FirebaseUtils.FirebaseUtilsAdapter {
         database.reference.child(USERS_KEY).child(USER_DATA_KEY).child(email).addListenerForSingleValueEvent(productUserListener)
     }
 
-    override fun registerUser(email: String, name: String, pass: String) {
-        database.reference.child(USERS_KEY).child(USER_DATA_KEY).child(email).child(NAME_KEY).setValue(name)
-        database.reference.child(USERS_KEY).child(USER_DATA_KEY).child(email).child(PASS_KEY).setValue(pass)
-        database.reference.child(USERS_KEY).child(USER_DATA_KEY).child(email).child(ADMIN_KEY).setValue("0")
+    override fun registerUser(user: User) {
+        user.email?.clean()?.let { database.reference.child(USERS_KEY).child(USER_DATA_KEY).child(it).setValue(user)}
     }
 
     override fun savePurchase(user:String, purchase: Purchase) {
@@ -134,7 +143,7 @@ class FirebaseAccess(context: Context) : FirebaseUtils.FirebaseUtilsAdapter {
     }
 
     override fun getPurchases(user: String) {
-        val productUserListener = object : ValueEventListener {
+        purchasesListener = object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 if(p0.value == null) {
                     DataNotifier.notifyData(NotificationType.PurchasesLoad, false)
@@ -151,7 +160,27 @@ class FirebaseAccess(context: Context) : FirebaseUtils.FirebaseUtilsAdapter {
                 Log.println(Log.ERROR, "ERROR_DATABASE", p0.toString())
             }
         }
-        database.reference.child(USERS_KEY).child(PURCHASES_KEY).child(user).addValueEventListener(productUserListener)
+        database.reference.child(USERS_KEY).child(PURCHASES_KEY).child(user).addValueEventListener(purchasesListener)
     }
 
+    override fun getMembersList() {
+        membersListener = object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.value == null) {
+                    DataNotifier.notifyData(NotificationType.MembersLoaded, false)
+                    return
+                }
+                val list: ArrayList<User> = arrayListOf()
+                p0.children.forEach { dataset ->
+                    dataset.getValue(User::class.java)?.let { list.add(it) }
+                }
+                CaixinhaRepository.setMembersList(list)
+                DataNotifier.notifyData(NotificationType.MembersLoaded, true)
+            }
+            override fun onCancelled(p0: DatabaseError) {
+                Log.println(Log.ERROR, "ERROR_DATABASE", p0.toString())
+            }
+        }
+        database.reference.child(USERS_KEY).child(USER_DATA_KEY).addValueEventListener(membersListener)
+    }
 }

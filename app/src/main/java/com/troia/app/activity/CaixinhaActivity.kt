@@ -16,6 +16,8 @@ import com.troia.app.R
 import com.troia.app.viewmodel.ViewModelCaixinha
 import com.troia.core.database.DataNotifier
 import com.troia.core.fragment.GeneralDialog
+import com.troia.core.utils.FirebaseUtils
+import com.troia.core.utils.PreferencesManager
 import com.troia.core.utils.UserUtils
 import java.io.Serializable
 
@@ -46,6 +48,19 @@ class CaixinhaActivity: AppCompatActivity() {
             when (it.itemId) {
                 com.troia.core.R.id.menu_products -> {
                     startActivity(Intent(this, CadastroActivity::class.java))
+                    finish()
+                    true
+                }
+                com.troia.core.R.id.menu_logout -> {
+                    FirebaseUtils.removeListeners()
+                    PreferencesManager.eraseLogin()
+                    val myIntent = Intent(this, LoginActivity::class.java)
+                    startActivity(myIntent)
+                    finish()
+                    true
+                }
+                com.troia.core.R.id.menu_members -> {
+                    startActivity(Intent(this, MembrosActivity::class.java))
                     finish()
                     true
                 }
@@ -123,6 +138,13 @@ class CaixinhaActivity: AppCompatActivity() {
                 getString(com.troia.core.R.string.confirm),
                 {viewModel.checkout()},
                 getString(com.troia.core.R.string.cancel),
+                {}
+            ).show(supportFragmentManager, GeneralDialog.TAG)
+        } else {
+            GeneralDialog.newInstance(
+                getString(com.troia.core.R.string.labelWarning),
+                getString(com.troia.core.R.string.warningEmptyCart),
+                getString(com.troia.core.R.string.labelOk),
                 {}
             ).show(supportFragmentManager, GeneralDialog.TAG)
         }

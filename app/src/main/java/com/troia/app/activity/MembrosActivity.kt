@@ -2,43 +2,45 @@ package com.troia.app.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
-import com.troia.app.adapter.ProductAdapter
-import com.troia.app.viewmodel.ProductsViewModel
-import com.troia.app.databinding.ActivityCadastroBinding
-import com.troia.core.database.DataNotifier
-import com.troia.core.types.Product
-import com.troia.core.utils.FirebaseUtils
+import com.troia.app.adapter.MembersAdapter
+import com.troia.app.databinding.ActivityMembrosBinding
+import com.troia.app.viewmodel.MembersViewModel
 import com.troia.core.types.SpaceItemDecoration
+import com.troia.core.types.User
+import com.troia.core.utils.FirebaseUtils
 import com.troia.core.utils.PreferencesManager
 import com.troia.core.utils.UserUtils
-import java.lang.Exception
 
-class CadastroActivity: AppCompatActivity() {
+class MembrosActivity: AppCompatActivity() {
 
-    private lateinit var binding: ActivityCadastroBinding
-    private val viewModel: ProductsViewModel by viewModels()
-    private lateinit var adapter: ProductAdapter
+    lateinit var binding: ActivityMembrosBinding
+    lateinit var membersAdapter: MembersAdapter
+    val viewModel: MembersViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCadastroBinding.inflate(layoutInflater)
+        binding = ActivityMembrosBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar.root as Toolbar)
-        setupNavMenu()
+        setSupportActionBar(binding.toolbar.root)
         setupAdapter()
+        setupNavMenu()
         setupListeners()
     }
 
-    fun setupNavMenu() {
+    private fun setupListeners() {
+        viewModel.updatedMembers.observe(this) {
+            membersAdapter.setMembers(viewModel.getMembersList())
+        }
+    }
+
+    private fun setupNavMenu() {
         val actionBarToggle = ActionBarDrawerToggle(this, binding.root, 0, 0)
         binding.root.addDrawerListener(actionBarToggle)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -48,8 +50,8 @@ class CadastroActivity: AppCompatActivity() {
 
         (binding.navView.root as NavigationView).setNavigationItemSelectedListener {
             when (it.itemId) {
-                com.troia.core.R.id.menu_cart -> {
-                    startActivity(Intent(this, CaixinhaActivity::class.java))
+                com.troia.core.R.id.menu_products -> {
+                    startActivity(Intent(this, CadastroActivity::class.java))
                     finish()
                     true
                 }
@@ -58,6 +60,11 @@ class CadastroActivity: AppCompatActivity() {
                     PreferencesManager.eraseLogin()
                     val myIntent = Intent(this, LoginActivity::class.java)
                     startActivity(myIntent)
+                    finish()
+                    true
+                }
+                com.troia.core.R.id.menu_cart -> {
+                    startActivity(Intent(this, CaixinhaActivity::class.java))
                     finish()
                     true
                 }
@@ -79,38 +86,10 @@ class CadastroActivity: AppCompatActivity() {
         }
     }
 
-    fun setupListeners() {
-        binding.buttonAdd.setOnClickListener {
-            try {
-                val name = binding.editProduct.text.toString()
-                val price = binding.editPrice.text.toString().toDouble()
-                val product = Product(name, price)
-                FirebaseUtils.saveProduct(product)
-            } catch (e: Exception) {
-                Log.println(Log.ERROR, "EXCEPTION", e.toString())
-            }
-        }
-
-        viewModel.updatedList.observe(this) {
-            adapter.updateList(viewModel.getProducts())
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        DataNotifier.subscribe(viewModel)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        DataNotifier.unsubscribe(viewModel)
-    }
-
     private fun setupAdapter() {
-        binding.recyclerView.apply {
-            itemAnimator = null
-            this@CadastroActivity.adapter = ProductAdapter(viewModel.getProducts())
-            adapter = this@CadastroActivity.adapter
+        membersAdapter = MembersAdapter(viewModel.getMembersList())
+        binding.recyclerView.apply{
+            adapter = membersAdapter
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(SpaceItemDecoration(15, RecyclerView.VERTICAL, 0, 15))
         }

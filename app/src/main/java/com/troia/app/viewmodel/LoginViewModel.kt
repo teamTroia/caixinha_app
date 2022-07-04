@@ -5,20 +5,28 @@ import androidx.lifecycle.ViewModel
 import com.troia.core.database.DataObserver
 
 import com.troia.core.database.NotificationType
+import com.troia.core.types.User
 import com.troia.core.utils.FirebaseUtils
 import java.security.MessageDigest
 
 class LoginViewModel: ViewModel(), DataObserver {
 
     val userValidateResult = MutableLiveData<Pair<Boolean, String>?>(null)
-    val userData = MutableLiveData<Triple<String, String, String>?>(null)
+    val userData = MutableLiveData<User?>(null)
     fun validateEmail(email: String) {
         FirebaseUtils.validateEmail(email.clean())
     }
 
     fun register(name:String, email:String, pass:String): Boolean {
         val password = encrypt(pass)
-        FirebaseUtils.registerUser(email.clean(), name, password)
+        FirebaseUtils.registerUser(
+            User().apply {
+                this.email = email
+                this.name = name
+                this.admin = true
+                this.pass = password
+            }
+        )
         return true
     }
 
@@ -54,7 +62,7 @@ class LoginViewModel: ViewModel(), DataObserver {
                 if (data == null) {
                     userData.postValue(null)
                 } else {
-                    val user = data as Triple<String, String, String>
+                    val user = data as User
                     userData.postValue(user)
                 }
             }

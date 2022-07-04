@@ -64,18 +64,16 @@ class LoginActivity: AppCompatActivity() {
 
         viewModel.userData.observe(this) {
             if(it != null) {
-                val name = it.first
-                val pass = it.second
-                val admin = it.third == "1"
-                if(pass == userPass){
-                    UserUtils.setUser(
-                        User(name, userEmail, admin)
-                    )
+                if(it.pass == userPass){
+                    UserUtils.setUser(it)
                     PreferencesManager.setLogin(userEmail, userPass)
                     val myIntent = Intent(this, CaixinhaActivity::class.java)
                     UserUtils.userCleanEmail()?.let { mail ->
                         FirebaseUtils.getUserCart(mail)
                         FirebaseUtils.getPurchases(mail)
+                        if (UserUtils.isUserAdmin()) {
+                            FirebaseUtils.getMembersList()
+                        }
                     }
                     startActivity(myIntent)
                     finish()

@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Troia"
         tools:targetApi="31">
         <activity
+            android:name=".activity.MembrosActivity">
+        </activity>
+        <activity
             android:name=".activity.MainActivity">
         </activity>
         <activity android:name=".activity.CadastroActivity">

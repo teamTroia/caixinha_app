@@ -34,6 +34,7 @@ class ViewModelCaixinha: ViewModel(), DataObserver {
             val purchase = Purchase().apply {
                 date = Date()
                 value = getTotal()
+                debt = value
             }
             UserUtils.addPurchase(purchase)
             UserUtils.resetList()

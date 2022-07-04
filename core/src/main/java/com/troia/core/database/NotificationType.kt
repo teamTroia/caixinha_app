@@ -5,5 +5,6 @@ enum class NotificationType(value: Int) {
     PurchasesLoad(1),
     UserCartLoad(2),
     EmailVerification(3),
-    UserData(4)
+    UserData(4),
+    MembersLoaded(5)
 }
