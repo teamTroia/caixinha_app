@@ -109,7 +109,7 @@ class CadastroActivity: AppCompatActivity() {
     private fun setupAdapter() {
         binding.recyclerView.apply {
             itemAnimator = null
-            this@CadastroActivity.adapter = ProductAdapter(viewModel.getProducts())
+            this@CadastroActivity.adapter = ProductAdapter(viewModel.getProducts(), this@CadastroActivity)
             adapter = this@CadastroActivity.adapter
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(SpaceItemDecoration(15, RecyclerView.VERTICAL, 0, 15))

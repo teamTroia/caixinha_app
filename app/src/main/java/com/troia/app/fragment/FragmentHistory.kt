@@ -4,19 +4,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.troia.app.adapter.CaixinhaHistoryAdapter
 import com.troia.app.databinding.HistoryFragmentBinding
-import com.troia.app.viewmodel.ViewModelCaixinha
+import com.troia.app.viewmodel.HistoryViewModel
+import com.troia.core.database.DataNotifier
 import com.troia.core.types.SpaceItemDecoration
+import com.troia.core.types.User
+import java.io.Serializable
 
 class FragmentHistory: Fragment() {
 
+    companion object {
+        val USER = "keyUSER"
+        fun newInstance(user: User?): FragmentHistory {
+            val bundle = bundleOf(USER to user as Serializable)
+            return FragmentHistory().apply {
+                this.arguments = bundle
+            }
+        }
+    }
+
     private lateinit var binding: HistoryFragmentBinding
-    private lateinit var viewModel: ViewModelCaixinha
+    private lateinit var viewModel: HistoryViewModel
     private lateinit var historyAdapter: CaixinhaHistoryAdapter
 
     override fun onCreateView(
@@ -30,7 +44,9 @@ class FragmentHistory: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(ViewModelCaixinha::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(HistoryViewModel::class.java)
+        val user = arguments?.get(USER) as User
+        viewModel.setUser(user)
         setupRecyclerView()
         setupListeners()
     }
@@ -38,6 +54,16 @@ class FragmentHistory: Fragment() {
     override fun onResume() {
         super.onResume()
         historyAdapter.updateList(viewModel.getPurchaseList())
+    }
+
+    override fun onStart() {
+        super.onStart()
+        DataNotifier.subscribe(viewModel)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        DataNotifier.unsubscribe(viewModel)
     }
 
     private fun setupListeners(){

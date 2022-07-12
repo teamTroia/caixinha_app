@@ -1,5 +1,6 @@
 package com.troia.core.types
 
+import com.troia.core.utils.GeneralUtils
 import java.io.Serializable
 
 class UserProduct(): Serializable {
@@ -14,5 +15,6 @@ class UserProduct(): Serializable {
     fun increaseQuantity(value: Int) {
         if(quantity + value >= 0)
             quantity += value
+        GeneralUtils.log("PRODUCT - increased $value in $name to ${quantity}un")
     }
 }

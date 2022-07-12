@@ -23,7 +23,7 @@ class LoginViewModel: ViewModel(), DataObserver {
             User().apply {
                 this.email = email
                 this.name = name
-                this.admin = true
+                this.admin = false
                 this.pass = password
             }
         )

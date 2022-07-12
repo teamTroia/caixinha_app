@@ -1,7 +1,11 @@
 package com.troia.app.fragment
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.*
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -20,6 +24,21 @@ class FragmentCaixinha: Fragment(), CaixinhaListAdapter.CaixinhaAdapterListener 
     private lateinit var binding: CaixinhaFragmentBinding
     private lateinit var caixinhaAdapter: CaixinhaListAdapter
     private lateinit var viewModel: ViewModelCaixinha
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
+        context?.let {
+            when {
+                shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE) -> {
+                    requireActivity().requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+                }
+                else -> {
+                    requestPermissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

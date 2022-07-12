@@ -41,6 +41,13 @@
     <string name="login">Login</string>
     <string name="wrong_user">Usuário ou senha incorreta</string>
     <string name="paidAlert">Compra paga</string>
+    <string name="parcialPaidAlert">Parcialmente pago, resta %s</string>
     <string name="notPaidAlert">Pagamento pendente</string>
-
+    <string name="delete_title">Deletar Produto</string>
+    <string name="delete_body">Tem certeza que deseja deletar %s?</string>
+    <string name="category_member">Membro</string>
+    <string name="category_admin">Admin:</string>
+    <string name="member_debpt">Dívida: %s</string>
+    <string name="addPaymenthint">10.00</string>
+    <string name="addPaymentButton">Pagar</string>
 </resources>

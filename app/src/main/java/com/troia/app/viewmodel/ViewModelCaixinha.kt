@@ -5,9 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.troia.core.database.DataObserver
 import com.troia.core.database.NotificationType
+import com.troia.core.repository.CaixinhaRepository
 import com.troia.core.types.UserProduct
 import com.troia.core.types.Purchase
 import com.troia.core.utils.FirebaseUtils
+import com.troia.core.utils.GeneralUtils
 import com.troia.core.utils.UserUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,14 +31,24 @@ class ViewModelCaixinha: ViewModel(), DataObserver {
         }
     }
 
+    private fun getProductLog():String {
+        var log = ""
+        UserUtils.productsList.forEach {
+            log = "$log${it.name}|${it.quantity}|${it.price}|"
+        }
+        return log
+    }
+
     fun checkout() {
         viewModelScope.launch(Dispatchers.IO) {
             val purchase = Purchase().apply {
                 date = Date()
                 value = getTotal()
                 debt = value
+                log = getProductLog()
             }
-            UserUtils.addPurchase(purchase)
+            UserUtils.userCleanEmail()?.let { CaixinhaRepository.addPurchase(it,purchase) }
+            GeneralUtils.log("CHECKOUT - Date: ${purchase.date}, total of ${purchase.value}")
             UserUtils.resetList()
             saveProducts()
             updatedProductsList.postValue(true)
@@ -65,7 +77,7 @@ class ViewModelCaixinha: ViewModel(), DataObserver {
         }
     }
 
-    fun createNewList() {
+    private fun createNewList() {
         if(creatingNewList) {
             UserUtils.createList()
             saveProducts()
@@ -81,13 +93,7 @@ class ViewModelCaixinha: ViewModel(), DataObserver {
         createNewList()
     }
 
-    fun saveProducts(){
+    fun saveProducts() {
         UserUtils.userCleanEmail()?.let { FirebaseUtils.saveUserCart(it,UserUtils.productsList) }
-    }
-
-    fun getPurchaseList(): ArrayList<Purchase> {
-        return ArrayList<Purchase>().apply{
-            addAll(UserUtils.purchasesList)
-        }
     }
 }

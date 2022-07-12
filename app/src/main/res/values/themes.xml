@@ -20,4 +20,11 @@
         <item name="postSplashScreenTheme">@style/Theme.Troia</item>
         <item name="android:windowSplashScreenAnimationDuration">1200</item>
     </style>
+
+    <style name="DialogTheme" parent="Theme.Troia">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
 </resources>

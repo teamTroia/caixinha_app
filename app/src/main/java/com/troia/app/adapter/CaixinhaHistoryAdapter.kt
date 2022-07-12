@@ -31,10 +31,17 @@ class CaixinhaHistoryAdapter(
         val formater = SimpleDateFormat("dd/MM/yyyy")
         holder.date.text = formater.format(item.date)
         holder.value.text = String.format("R$ %.2f", item.value)
-        holder.icon.setImageResource(if (item.paid) R.drawable.ic_payment_green else R.drawable.ic_payment_red)
+        holder.icon.setImageResource( if (item.debt == 0.0)
+            R.drawable.ic_payment_green
+        else if (item.debt < item.value)
+            R.drawable.ic_payment_orange
+        else
+            R.drawable.ic_payment_red)
         holder.icon.setOnClickListener {
-            if (item.paid)
+            if (item.debt == 0.0)
                 Toast.makeText(holder.context, holder.context.getString(com.troia.core.R.string.paidAlert), Toast.LENGTH_SHORT).show()
+            else if (item.debt < item.value)
+                Toast.makeText(holder.context, holder.context.getString(com.troia.core.R.string.parcialPaidAlert, String.format("R$ %.2f", item.debt)), Toast.LENGTH_SHORT).show()
             else
                 Toast.makeText(holder.context, holder.context.getString(com.troia.core.R.string.notPaidAlert), Toast.LENGTH_SHORT).show()
 

@@ -25,14 +25,10 @@ class FirebaseAccess(context: Context) : FirebaseUtils.FirebaseUtilsAdapter {
         const val PURCHASES_KEY = "keyPurchases"
         const val USERS_KEY = "keyUsers"
         const val USER_DATA_KEY = "keyUserData"
-
-        const val NAME_KEY = "name"
-        const val PASS_KEY = "pass"
-        const val ADMIN_KEY = "admin"
     }
 
     var database: FirebaseDatabase
-    private lateinit var purchasesListener: ValueEventListener
+    private var purchasesListeners: ArrayList<ValueEventListener> = arrayListOf()
     private lateinit var productUserListener: ValueEventListener
     private lateinit var membersListener: ValueEventListener
     init {
@@ -42,7 +38,9 @@ class FirebaseAccess(context: Context) : FirebaseUtils.FirebaseUtilsAdapter {
     }
 
     override fun removeListeners() {
-        database.reference.removeEventListener(purchasesListener)
+        purchasesListeners.forEach {
+            database.reference.removeEventListener(it)
+        }
         database.reference.removeEventListener(productUserListener)
         database.reference.removeEventListener(membersListener)
     }
@@ -51,6 +49,11 @@ class FirebaseAccess(context: Context) : FirebaseUtils.FirebaseUtilsAdapter {
         products.let {
             database.reference.child(PRODUCTS_KEY).child(it.name).setValue(it.price)
         }
+    }
+
+    override fun removeProduct(product: Product) {
+        database.reference.child(PRODUCTS_KEY).child(product.name).removeValue()
+        DataNotifier.notifyData(NotificationType.ProductsLoad, true)
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -139,11 +142,13 @@ class FirebaseAccess(context: Context) : FirebaseUtils.FirebaseUtilsAdapter {
     }
 
     override fun savePurchase(user:String, purchase: Purchase) {
-        database.reference.child(USERS_KEY).child(PURCHASES_KEY).child(user).push().setValue(purchase)
+        database.reference.child(USERS_KEY).child(PURCHASES_KEY).child(user).child(purchase.date?.time.toString()).setValue(purchase)
     }
 
+
+
     override fun getPurchases(user: String) {
-        purchasesListener = object : ValueEventListener {
+        val purchasesListener = object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 if(p0.value == null) {
                     DataNotifier.notifyData(NotificationType.PurchasesLoad, false)
@@ -153,7 +158,7 @@ class FirebaseAccess(context: Context) : FirebaseUtils.FirebaseUtilsAdapter {
                 p0.children.forEach { dataset ->
                     dataset.getValue(Purchase::class.java)?.let { list.add(it) }
                 }
-                UserUtils.setPurchaseList(list)
+                CaixinhaRepository.setPurchaseList(user,list)
                 DataNotifier.notifyData(NotificationType.PurchasesLoad, true)
             }
             override fun onCancelled(p0: DatabaseError) {
@@ -161,6 +166,7 @@ class FirebaseAccess(context: Context) : FirebaseUtils.FirebaseUtilsAdapter {
             }
         }
         database.reference.child(USERS_KEY).child(PURCHASES_KEY).child(user).addValueEventListener(purchasesListener)
+        purchasesListeners.add(purchasesListener)
     }
 
     override fun getMembersList() {

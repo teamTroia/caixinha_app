@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/appBackground">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="6dp"
+        android:layout_marginTop="15dp"
+        android:paddingHorizontal="10dp">
+
+        <ImageView
+            android:id="@+id/iconPerson"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_person"
+            android:background="@drawable/circle_border"/>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/font_troia"
+            android:textSize="20sp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/memberType"
+            app:layout_constraintStart_toEndOf="@id/iconPerson"
+            tools:text="@tools:sample/full_names"/>
+
+        <TextView
+            android:id="@+id/memberType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/font_troia"
+            android:textSize="15sp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            app:layout_constraintStart_toEndOf="@id/iconPerson"
+            android:text="@string/category_admin"/>
+
+        <Switch
+            android:id="@+id/adminSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            app:layout_constraintStart_toEndOf="@id/memberType"/>
+
+        <TextView
+            android:id="@+id/memberDebt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/font_troia"
+            android:textSize="15sp"
+            android:layout_marginStart="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            app:layout_constraintStart_toEndOf="@id/adminSwitch"
+            tools:text="@string/member_debpt"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="10dp"
+        android:background="@color/lightGreyTroia"/>
+
+    <FrameLayout
+        android:id="@+id/framePurchases"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editValue"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="10dp"
+            android:paddingHorizontal="8dp"
+            android:hint="@string/addPaymenthint"
+            android:inputType="numberDecimal"
+            android:textColorHint="@color/lightGreyTroia"
+            android:background="@drawable/input_background"/>
+
+        <Button
+            android:id="@+id/addPayment"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="@string/addPaymentButton"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/button_background"/>
+    </LinearLayout>
+
+</LinearLayout>

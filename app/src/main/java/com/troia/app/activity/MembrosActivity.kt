@@ -13,7 +13,6 @@ import com.troia.app.adapter.MembersAdapter
 import com.troia.app.databinding.ActivityMembrosBinding
 import com.troia.app.viewmodel.MembersViewModel
 import com.troia.core.types.SpaceItemDecoration
-import com.troia.core.types.User
 import com.troia.core.utils.FirebaseUtils
 import com.troia.core.utils.PreferencesManager
 import com.troia.core.utils.UserUtils
@@ -38,6 +37,7 @@ class MembrosActivity: AppCompatActivity() {
         viewModel.updatedMembers.observe(this) {
             membersAdapter.setMembers(viewModel.getMembersList())
         }
+        viewModel.getAllPurchases()
     }
 
     private fun setupNavMenu() {
@@ -87,7 +87,7 @@ class MembrosActivity: AppCompatActivity() {
     }
 
     private fun setupAdapter() {
-        membersAdapter = MembersAdapter(viewModel.getMembersList())
+        membersAdapter = MembersAdapter(viewModel.getMembersList(), this)
         binding.recyclerView.apply{
             adapter = membersAdapter
             layoutManager = LinearLayoutManager(context)

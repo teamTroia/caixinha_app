@@ -20,6 +20,7 @@ object FirebaseUtils {
         fun getPurchases(user: String)
         fun removeListeners()
         fun getMembersList()
+        fun removeProduct(product: Product)
     }
 
     lateinit var adapter: FirebaseUtilsAdapter
@@ -39,4 +40,5 @@ object FirebaseUtils {
     fun getPurchases(user: String) = adapter.getPurchases(user)
     fun removeListeners() = adapter.removeListeners()
     fun getMembersList() = adapter.getMembersList()
+    fun removeProduct(product: Product) = adapter.removeProduct(product)
 }

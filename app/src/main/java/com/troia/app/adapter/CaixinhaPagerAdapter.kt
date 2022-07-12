@@ -5,11 +5,12 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.troia.app.fragment.FragmentCaixinha
 import com.troia.app.fragment.FragmentHistory
+import com.troia.core.utils.UserUtils
 
 class CaixinhaPagerAdapter(fragment: FragmentActivity): FragmentStateAdapter(fragment){
 
-    private val fragmentCaixinha = com.troia.app.fragment.FragmentCaixinha()
-    private val fragmentHistory = com.troia.app.fragment.FragmentHistory()
+    private val fragmentCaixinha = FragmentCaixinha()
+    private val fragmentHistory = FragmentHistory.newInstance(UserUtils.getUser())
 
     override fun getItemCount(): Int = 2
 
